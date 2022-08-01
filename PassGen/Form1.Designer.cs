@@ -156,6 +156,7 @@
             this.radioButton9.TabStop = true;
             this.radioButton9.Text = "adjective";
             this.radioButton9.UseVisualStyleBackColor = true;
+            this.radioButton9.Click += new System.EventHandler(this.Update3);
             // 
             // radioButton10
             // 
@@ -167,6 +168,7 @@
             this.radioButton10.TabStop = true;
             this.radioButton10.Text = "noun";
             this.radioButton10.UseVisualStyleBackColor = true;
+            this.radioButton10.Click += new System.EventHandler(this.Update3);
             // 
             // radioButton11
             // 
@@ -178,6 +180,7 @@
             this.radioButton11.TabStop = true;
             this.radioButton11.Text = "verb";
             this.radioButton11.UseVisualStyleBackColor = true;
+            this.radioButton11.Click += new System.EventHandler(this.Update3);
             // 
             // tableLayoutPanel5
             // 
@@ -208,6 +211,7 @@
             this.radioButton6.TabStop = true;
             this.radioButton6.Text = "adjective";
             this.radioButton6.UseVisualStyleBackColor = true;
+            this.radioButton6.Click += new System.EventHandler(this.Update2);
             // 
             // radioButton7
             // 
@@ -219,6 +223,7 @@
             this.radioButton7.TabStop = true;
             this.radioButton7.Text = "noun";
             this.radioButton7.UseVisualStyleBackColor = true;
+            this.radioButton7.Click += new System.EventHandler(this.Update2);
             // 
             // radioButton8
             // 
@@ -231,6 +236,7 @@
             this.radioButton8.TabStop = true;
             this.radioButton8.Text = "verb";
             this.radioButton8.UseVisualStyleBackColor = true;
+            this.radioButton8.Click += new System.EventHandler(this.Update2);
             // 
             // tableLayoutPanel3
             // 
@@ -261,6 +267,7 @@
             this.radioButton1.TabStop = true;
             this.radioButton1.Text = "adjective";
             this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.Click += new System.EventHandler(this.Update);
             // 
             // radioButton2
             // 
@@ -273,6 +280,7 @@
             this.radioButton2.TabStop = true;
             this.radioButton2.Text = "noun";
             this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton2.Click += new System.EventHandler(this.Update);
             // 
             // radioButton3
             // 
@@ -284,6 +292,7 @@
             this.radioButton3.TabStop = true;
             this.radioButton3.Text = "verb";
             this.radioButton3.UseVisualStyleBackColor = true;
+            this.radioButton3.Click += new System.EventHandler(this.Update);
             // 
             // tableLayoutPanel2
             // 

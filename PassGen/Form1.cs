@@ -25,8 +25,8 @@ namespace PassGen
             comboBox1.DataSource = adj;
 
             chars = Methods<string, string>.ListsIntoDict(
-                new List<string>() {"a","i","l","e","s" },
-                new List<string>() {"@","!","!","€","$" },
+                new List<string>() { "a", "i", "l", "e", "s" },
+                new List<string>() { "@", "!", "!", "€", "$" },
                 chars
                 );
 
@@ -42,7 +42,14 @@ namespace PassGen
             word1 = comboBox2.Text;
             word2 = comboBox3.Text;
             word3 = comboBox1.Text;
-            ModifyText(new string[] { word1, word2, word3 },numericUpDown1.Value,numericUpDown2.Value,numericUpDown3.Value);
+            try
+            {
+                ModifyText(new string[] { word1, word2, word3 }, numericUpDown1.Value, numericUpDown2.Value, numericUpDown3.Value);
+            }
+            catch
+            {
+                MessageBox.Show("Error. Be sure to fill every word field.");
+            }
         }
 
         void ModifyText(string[] words, decimal chars, decimal numbers, decimal upper)
@@ -51,11 +58,11 @@ namespace PassGen
             Random r = new Random();
             int i = 0;
             int iter = 0;
-            while(chars > 0)
+            while (chars > 0)
             {
                 if (iter > 5)
                     break;
-                if (i > word.Length-1)
+                if (i > word.Length - 1)
                 {
                     i = 0;
                     iter++;
@@ -66,7 +73,7 @@ namespace PassGen
                     i++;
                     continue;
                 }
-                
+
                 if (this.chars.ContainsKey(word[i].ToString()))
                 {
                     word[i] = this.chars[word[i].ToString()].ToCharArray()[0];
@@ -76,7 +83,7 @@ namespace PassGen
             }
             i = 0;
             iter = 0;
-            while(numbers > 0)
+            while (numbers > 0)
             {
                 if (iter > 5)
                     break;
@@ -125,6 +132,31 @@ namespace PassGen
             }
 
             textBox1.Text = new string(word);
+        }
+        private void Update(object sender, EventArgs e)
+        {
+            cbUpdate(new RadioButton[] { radioButton1, radioButton2, radioButton3 }, comboBox2);
+        }
+        private void Update2(object sender, EventArgs e)
+        {
+            cbUpdate(new RadioButton[] { radioButton6, radioButton7, radioButton8 }, comboBox3);
+        }
+
+        private void Update3(object sender, EventArgs e)
+        {
+            cbUpdate(new RadioButton[] { radioButton9, radioButton10, radioButton11 }, comboBox1);
+        }
+
+
+
+        void cbUpdate(RadioButton[] rad, ComboBox cb)
+        {
+            if (rad[0].Checked)
+                cb.DataSource = adj;
+            else if (rad[1].Checked)
+                cb.DataSource = noun;
+            else
+                cb.DataSource = verb;
         }
     }
 
