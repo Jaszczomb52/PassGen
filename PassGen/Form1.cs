@@ -13,28 +13,42 @@ namespace PassGen
         public Form1()
         {
             InitializeComponent();
-            var file = File.ReadAllLines("C:\\Users\\Kacper\\source\\repos\\PassGen\\PassGen\\eng-adj.txt");
+            var file = File.ReadAllLines("..\\..\\..\\eng-adj.txt");
             adj = new List<string>(file);
-            file = File.ReadAllLines("C:\\Users\\Kacper\\source\\repos\\PassGen\\PassGen\\eng-noun.txt");
+            file = File.ReadAllLines("..\\..\\..\\eng-noun.txt");
             noun = new List<string>(file);
-            file = File.ReadAllLines("C:\\Users\\Kacper\\source\\repos\\PassGen\\PassGen\\eng-verb.txt");
+            file = File.ReadAllLines("..\\..\\..\\eng-verb.txt");
             verb = new List<string>(file);
 
             comboBox2.DataSource = noun;
             comboBox3.DataSource = verb;
             comboBox1.DataSource = adj;
 
-            chars = Methods<string, string>.ListsIntoDict(
-                new List<string>() { "a", "i", "l", "e", "s" },
-                new List<string>() { "@", "!", "!", "€", "$" },
-                chars
-                );
+            try
+            {
+                chars = Methods<string, string>.ListsIntoDict(
+                    new List<string>() { "a", "i", "l", "e", "s" },
+                    new List<string>() { "@", "!", "!", "€", "$" },
+                    chars
+                    );
+            }
+            catch(ArgumentNullException)
+            {
+                MessageBox.Show("Error during converting lists into dictionary");
+            }
 
-            numbers = Methods<string, string>.ListsIntoDict(
-                new List<string>() { "i", "l", "e", "s", "a", "b", "g", "o" },
-                new List<string>() { "1", "7", "3", "5", "4", "6", "9", "0" },
-                numbers
-                );
+            try
+            {
+                numbers = Methods<string, string>.ListsIntoDict(
+                    new List<string>() { "i", "l", "e", "s", "a", "b", "g", "o" },
+                    new List<string>() { "1", "7", "3", "5", "4", "6", "9", "0" },
+                    numbers
+                    );
+            }
+            catch(ArgumentNullException)
+            {
+                MessageBox.Show("Error during converting lists into dictionary");
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -44,7 +58,10 @@ namespace PassGen
             word3 = comboBox1.Text;
             try
             {
-                ModifyText(new string[] { word1, word2, word3 }, numericUpDown1.Value, numericUpDown2.Value, numericUpDown3.Value);
+                ModifyText(new string[] { word1, word2, word3 },
+                    Convert.ToInt32(numericUpDown1.Value),
+                    Convert.ToInt32(numericUpDown2.Value),
+                    Convert.ToInt32(numericUpDown3.Value));
             }
             catch
             {
@@ -52,9 +69,24 @@ namespace PassGen
             }
         }
 
-        void ModifyText(string[] words, decimal chars, decimal numbers, decimal upper)
+        void ModifyText(string[] words, int chars, int numbers, int upper)
         {
             char[] word = (words[0] + words[1] + words[2]).ToCharArray();
+            if (!checkBox1.Checked)
+            {
+                if (word.Length / 6 > 2)
+                {
+                    chars = word.Length / 6;
+                    numbers = word.Length / 6;
+                    upper = word.Length / 6;
+                }
+                else
+                {
+                    chars = 2;
+                    numbers = 2;
+                    upper = 2;
+                }
+            }
             Random r = new Random();
             int i = 0;
             int iter = 0;
@@ -158,14 +190,32 @@ namespace PassGen
             else
                 cb.DataSource = verb;
         }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked)
+                tableLayoutPanel2.Visible = true;
+            else
+                tableLayoutPanel2.Visible = false;
+        }
     }
 
     public static class Methods<T,t>
     {
         public static Dictionary<T,t> ListsIntoDict(List<T> keys, List<t> values, Dictionary<T,t> dict)
         {
-            for(int i = 0; i < keys.Count; i++)
+            if (keys is null)
+                throw new ArgumentNullException(nameof(keys));
+            if (values is null)
+                throw new ArgumentNullException(nameof(values));
+            if (dict is null)
+                throw new ArgumentNullException(nameof(dict));
+            for (int i = 0; i < keys.Count; i++)
             {
+                if (keys[i] is null)
+                    continue;
+                if (values[i] is null)
+                    continue;
                 dict.Add(keys[i], values[i]);
             }
             return dict;
